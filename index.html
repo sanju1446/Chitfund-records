@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="coloring.css">
+    <title>RR Kakatiya Chit Fund</title>
+</head>
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-top">
+            <div class="logo">₹ Chit Fund</div>
+            <div class="nav-item active" onclick="navigate('home', this)">🏠 Home</div>
+            <div class="nav-item" onclick="navigate('tables', this)">📊 Tables</div>
+            <div class="nav-item" onclick="navigate('notices', this)">📢 Notices</div>
+            <div class="nav-item" onclick="navigate('create', this)">➕ Create Table</div>
+            <div class="nav-item" onclick="navigate('workers', this)">👨‍💼 Incharge</div>
+            <div class="nav-item" onclick="navigate('moneygiven', this)">💸 Money Given</div>
+        </div>
+        <div class="sidebar-bottom">
+            <div class="nav-item" onclick="navigate('due', this)">⚠️ Due List</div>
+            <div class="nav-item" onclick="navigate('penalty', this)">⚡ Penalty List</div>
+            <div class="nav-item" onclick="navigate('history', this)">📜 History</div>
+            <div class="nav-item" onclick="navigate('bin', this)">🗑 Bin</div>
+        </div>
+        
+    </aside>
+    <div id="sidebarBackdrop" class="sidebar-backdrop" onclick="toggleSidebar()"></div>
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        <header class="topbar">
+            <div style="display:flex;align-items:center;gap:12px">
+                <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+                <h2 id="pageTitle">Home</h2>
+            </div>
+            <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌙</button>
+        </header>
+        <div id="contentArea"></div>
+    </main>
+
+</div>
+
+<script src="javascrip.js"></script>
+</body>
+</html>

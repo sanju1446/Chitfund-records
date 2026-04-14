@@ -1,0 +1,1393 @@
+/* ── Google Fonts ──────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap');
+
+/* ── Variables (Light Mode) ────────────────────────────── */
+:root {
+    --bg:            #f0f2f5;
+    --surface:       #ffffff;
+    --surface2:      #f7f8fa;
+    --border:        #e2e5ea;
+    --text:          #1a1d23;
+    --text-muted:    #6b7280;
+    --primary:       #2563eb;
+    --primary-hover: #1d4ed8;
+    --accent:        #059669;
+    --danger:        #dc2626;
+    --danger-hover:  #b91c1c;
+
+    --sidebar-bg:    #1e3a5f;
+    --sidebar-hover: rgba(255,255,255,0.12);
+    --sidebar-active:#2563eb;
+    --header-bg:     #1e3a5f;
+    --th-bg:         #1e293b;
+
+    --shadow:        0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.06);
+    --radius:        12px;
+    --radius-sm:     8px;
+    --transition:    0.18s ease;
+}
+
+/* ── Variables (Dark Mode) ─────────────────────────────── */
+.dark {
+    --bg:            #0f1117;
+    --surface:       #1a1d27;
+    --surface2:      #22263a;
+    --border:        #2e3348;
+    --text:          #e8eaf0;
+    --text-muted:    #8b92a8;
+    --primary:       #3b82f6;
+    --primary-hover: #60a5fa;
+    --accent:        #10b981;
+    --danger:        #ef4444;
+    --danger-hover:  #f87171;
+
+    --sidebar-bg:    #0d1117;
+    --sidebar-hover: rgba(255,255,255,0.08);
+    --sidebar-active:#3b82f6;
+    --header-bg:     #0d1117;
+    --th-bg:         #0d1117;
+
+    --shadow:        0 1px 3px rgba(0,0,0,0.3), 0 4px 16px rgba(0,0,0,0.25);
+}
+
+/* ── Reset & Base ──────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 15px;
+    transition: background var(--transition), color var(--transition);
+}
+
+/* ── App Shell ─────────────────────────────────────────── */
+.app {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* ── Sidebar ───────────────────────────────────────────── */
+.logo {
+    font-size: 19px;
+    font-weight: 700;
+    font-family: 'DM Serif Display', serif;
+    color: #fff;
+    padding: 0 8px;
+    margin-bottom: 24px;
+    letter-spacing: 0.3px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-item {
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    margin-bottom: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.8);
+    transition: background var(--transition), color var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.nav-item:hover  { background: var(--sidebar-hover); color: #fff; }
+.nav-item.active { background: var(--sidebar-active); color: #fff; font-weight: 600; }
+
+/* ── Main Content ──────────────────────────────────────── */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg);
+    overflow: hidden;
+    transition: background var(--transition);
+}
+
+/* ── Topbar ────────────────────────────────────────────── */
+.topbar {
+    height: 60px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    flex-shrink: 0;
+    transition: background var(--transition), border-color var(--transition);
+}
+.topbar h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    color: var(--text);
+}
+
+/* ── Content Area ──────────────────────────────────────── */
+#contentArea {
+    padding: 24px;
+    overflow-y: auto;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* ── Theme Toggle ──────────────────────────────────────── */
+.theme-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background var(--transition);
+}
+.theme-btn:hover { background: var(--border); }
+
+/* ── Cards ─────────────────────────────────────────────── */
+.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: var(--shadow);
+    transition: background var(--transition), border-color var(--transition);
+}
+.card-header {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.section-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    font-family: 'DM Serif Display', serif;
+}
+
+/* ── Form Grid ─────────────────────────────────────────── */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"],
+input[type="tel"] {
+    width: 100%;
+    padding: 10px 12px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    transition: border-color var(--transition), box-shadow var(--transition);
+}
+input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+}
+
+/* ── Buttons ───────────────────────────────────────────── */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 18px;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background var(--transition), transform 0.1s;
+}
+.btn:active { transform: scale(0.97); }
+.btn-primary   { background: var(--primary);  color: white; }
+.btn-primary:hover { background: var(--primary-hover); }
+.btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
+.btn-secondary:hover { background: var(--border); }
+.btn-danger    { background: var(--danger);   color: white; padding: 7px 13px; font-size: 13px; }
+.btn-danger:hover { background: var(--danger-hover); }
+.btn-success   { background: var(--accent);   color: white; padding: 7px 13px; font-size: 13px; }
+.btn-success:hover { filter: brightness(1.1); }
+.btn-ghost {
+    background: transparent;
+    color: var(--primary);
+    border: 1px solid var(--primary);
+    padding: 7px 13px;
+    font-size: 13px;
+}
+.btn-ghost:hover { background: rgba(37,99,235,0.08); }
+.btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+
+/* ── Member Input Cards ────────────────────────────────── */
+.member-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 12px;
+    margin: 20px 0 4px;
+}
+.member-card-input {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.member-card-input .member-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+.member-card-input input { margin: 0; padding: 8px 10px; font-size: 13px; }
+
+/* ── Commission Info Box ───────────────────────────────── */
+.info-box {
+    background: rgba(37,99,235,0.07);
+    border: 1px solid rgba(37,99,235,0.2);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    font-size: 13px;
+    color: var(--text);
+    margin-top: 12px;
+    line-height: 1.6;
+}
+.dark .info-box { background: rgba(59,130,246,0.1); border-color: rgba(59,130,246,0.25); }
+.info-box strong { color: var(--primary); }
+
+/* ── Group List ────────────────────────────────────────── */
+.group-list { display: flex; flex-direction: column; gap: 8px; }
+
+.group-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 13px 16px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background var(--transition), border-color var(--transition);
+    gap: 10px;
+}
+.group-item:hover, .group-item.active {
+    background: rgba(37,99,235,0.07);
+    border-color: var(--primary);
+}
+
+.group-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: inline-block;
+    flex-shrink: 0;
+}
+.group-meta-tag { font-size: 11px; color: var(--text-muted); font-weight: 400; }
+.group-empty { color: var(--text-muted); font-size: 14px; text-align: center; padding: 24px; }
+
+/* ── Group Detail Header ───────────────────────────────── */
+.group-detail-header { margin-bottom: 18px; }
+.group-detail-header h4 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    margin-bottom: 10px;
+    color: var(--text);
+}
+.meta { display: flex; gap: 12px; flex-wrap: wrap; font-size: 13px; color: var(--text-muted); }
+.meta-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+/* ── Table ─────────────────────────────────────────────── */
+.table-wrap {
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: 520px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    margin-bottom: 16px;
+    position: relative;
+}
+
+td {
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    vertical-align: middle;
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--surface2); }
+td input[type="number"] { width: 110px; padding: 7px 10px; font-size: 13px; }
+td select {
+    padding: 7px 10px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 13px;
+    cursor: pointer;
+    outline: none;
+}
+
+.due-zero    { color: var(--accent);  font-weight: 700; }
+.due-partial { color: #f59e0b;        font-weight: 700; }
+.due-full    { color: var(--danger);  font-weight: 700; }
+.paid-cell   { color: var(--primary); font-weight: 600; }
+
+.payout-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(5,150,105,0.1);
+    color: var(--accent);
+    border: 1px solid rgba(5,150,105,0.25);
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-size: 12px;
+    font-weight: 600;
+}
+.phone-cell { color: var(--text-muted); font-size: 12.5px; }
+
+/* ── Search Row ────────────────────────────────────────── */
+.search-row { display: flex; gap: 10px; align-items: flex-end; margin-bottom: 16px; }
+.search-row input { flex: 1; }
+
+/* ── Trash ─────────────────────────────────────────────── */
+.trash-list { display: flex; flex-direction: column; gap: 8px; }
+.trash-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: var(--surface2);
+    border: 1px solid rgba(220,38,38,0.15);
+    border-radius: var(--radius-sm);
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.trash-item-name { font-weight: 500; font-size: 14px; color: var(--text-muted); }
+.trash-actions { display: flex; gap: 8px; }
+.trash-empty { font-size: 13px; color: var(--text-muted); text-align: center; padding: 16px; }
+
+/* ── Home Page ─────────────────────────────────────────── */
+.home-hero {
+    background: linear-gradient(135deg, var(--sidebar-bg) 0%, #2563eb 100%);
+    border-radius: var(--radius);
+    padding: 32px 28px;
+    color: white;
+    margin-bottom: 4px;
+}
+.home-hero h2 { font-family: 'DM Serif Display', serif; font-size: 26px; margin-bottom: 8px; }
+.home-hero p  { opacity: 0.8; font-size: 14px; }
+
+.home-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 14px;
+}
+.stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 18px 16px;
+    text-align: center;
+    box-shadow: var(--shadow);
+}
+.stat-card .stat-num {
+    font-size: 26px;
+    font-weight: 700;
+    font-family: 'DM Serif Display', serif;
+    color: var(--primary);
+}
+.stat-card .stat-label { font-size: 12px; color: var(--text-muted); margin-top: 4px; font-weight: 500; }
+
+/* ═══════════════════════════════════════════════════════════
+   REMINDER / NOTIFICATION STYLES
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Urgency colour tokens ──────────────────────────────── */
+:root {
+    --rem-overdue-bg:  rgba(220,38,38,0.07);
+    --rem-overdue-brd: #dc2626;
+    --rem-urgent-bg:   rgba(234,88,12,0.07);
+    --rem-urgent-brd:  #ea580c;
+    --rem-soon-bg:     rgba(202,138,4,0.07);
+    --rem-soon-brd:    #ca8a04;
+    --rem-upcoming-bg: rgba(5,150,105,0.07);
+    --rem-upcoming-brd:#059669;
+}
+.dark {
+    --rem-overdue-bg:  rgba(220,38,38,0.12);
+    --rem-urgent-bg:   rgba(234,88,12,0.12);
+    --rem-soon-bg:     rgba(202,138,4,0.12);
+    --rem-upcoming-bg: rgba(5,150,105,0.12);
+}
+
+/* ── Notices page – reminder list items ────────────────── */
+.reminder-item {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: var(--radius-sm);
+    border-left: 4px solid transparent;
+    margin-bottom: 10px;
+    transition: background var(--transition);
+}
+.reminder-item:last-child { margin-bottom: 0; }
+
+.rem-overdue  { background: var(--rem-overdue-bg);  border-left-color: var(--rem-overdue-brd); }
+.rem-urgent   { background: var(--rem-urgent-bg);   border-left-color: var(--rem-urgent-brd);  }
+.rem-soon     { background: var(--rem-soon-bg);     border-left-color: var(--rem-soon-brd);    }
+.rem-upcoming { background: var(--rem-upcoming-bg); border-left-color: var(--rem-upcoming-brd);}
+
+.rem-left  { flex: 1; min-width: 0; }
+.rem-title { font-weight: 700; font-size: 14px; margin-bottom: 3px; color: var(--text); }
+.rem-note  { font-size: 12.5px; color: var(--text-muted); margin-bottom: 6px; }
+.rem-meta  { display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--text-muted); flex-wrap: wrap; }
+
+/* urgency tags in the list */
+.rem-urgency-tag {
+    display: inline-block;
+    padding: 2px 9px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 11px;
+}
+.rem-overdue-tag  { background: rgba(220,38,38,0.15);  color: #dc2626; }
+.rem-urgent-tag   { background: rgba(234,88,12,0.15);  color: #ea580c; }
+.rem-soon-tag     { background: rgba(202,138,4,0.15);  color: #a16207; }
+.rem-upcoming-tag { background: rgba(5,150,105,0.15);  color: #059669; }
+
+.rem-empty { color: var(--text-muted); font-size: 13px; text-align: center; padding: 20px; }
+
+/* ── Urgency legend ─────────────────────────────────────── */
+.urgency-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+.legend-dot {
+    padding: 3px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* ── Home notification cards ───────────────────────────── */
+.reminders-home-card { 
+    border-left: 4px solid var(--primary);
+}
+
+.home-notif {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 13px 16px;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid transparent;
+    margin-bottom: 10px;
+    position: relative;
+    transition: background var(--transition), border-color var(--transition);
+}
+.home-notif:last-child { margin-bottom: 0; }
+
+/* apply urgency colours to notif cards */
+.home-notif.rem-overdue  { background: var(--rem-overdue-bg);  border-color: var(--rem-overdue-brd); }
+.home-notif.rem-urgent   { background: var(--rem-urgent-bg);   border-color: var(--rem-urgent-brd);  }
+.home-notif.rem-soon     { background: var(--rem-soon-bg);     border-color: var(--rem-soon-brd);    }
+.home-notif.rem-upcoming { background: var(--rem-upcoming-bg); border-color: var(--rem-upcoming-brd);}
+
+.notif-icon  { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+.notif-body  { flex: 1; min-width: 0; }
+.notif-title { font-weight: 700; font-size: 14px; color: var(--text); margin-bottom: 2px; }
+.notif-note  { font-size: 12.5px; color: var(--text-muted); margin-bottom: 4px; }
+.notif-date  { font-size: 12px; color: var(--text-muted); }
+.notif-date strong { color: var(--text); }
+
+.notif-dismiss {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 14px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 2px 6px;
+    border-radius: 4px;
+    flex-shrink: 0;
+    align-self: flex-start;
+    transition: background var(--transition), color var(--transition);
+}
+.notif-dismiss:hover { background: var(--border); color: var(--text); }
+
+.home-rem-empty {
+    color: var(--text-muted);
+    font-size: 13px;
+    text-align: center;
+    padding: 16px;
+}
+input::placeholder {
+    color: var(--text-muted);
+}
+
+/* ── Member search bar (inside group detail) ───────────── */
+.member-search-wrap {
+    margin: 10px 0 14px;
+}
+.member-search-wrap input {
+    width: 280px;
+    max-width: 100%;
+}
+
+/* ── History page styles ────────────────────────────────── */
+.history-member-block {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    margin-bottom: 14px;
+    background: var(--surface2);
+    transition: background var(--transition), border-color var(--transition);
+}
+.history-member-block:last-child { margin-bottom: 0; }
+
+.history-member-name {
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--text);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.history-empty-msg {
+    font-size: 13px;
+    color: var(--text-muted);
+    padding: 4px 0;
+}
+/* ── History Tab Row ────────────────────────────────────── */
+.hist-tab-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+.hist-tab {
+    padding: 8px 18px;
+    border-radius: 20px;
+    border: 1.5px solid var(--border);
+    background: var(--surface2);
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition);
+    font-family: 'DM Sans', sans-serif;
+}
+.hist-tab:hover { background: var(--border); color: var(--text); }
+.hist-tab.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: #fff;
+}
+
+
+.hist-hint {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 8px;
+}
+
+/* ── Excel-style summary chips ──────────────────────────── */
+.hist-excel-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+}
+.hist-meta-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+.chip-paid     { background: rgba(5,150,105,0.12);   color: #059669; border: 1px solid rgba(5,150,105,0.25); }
+.chip-expected { background: rgba(37,99,235,0.10);   color: var(--primary); border: 1px solid rgba(37,99,235,0.2); }
+.chip-due      { background: rgba(202,138,4,0.10);   color: #a16207; border: 1px solid rgba(202,138,4,0.2); }
+.chip-unpaid   { background: rgba(220,38,38,0.10);   color: #dc2626; border: 1px solid rgba(220,38,38,0.2); }
+.chip-clear    { background: rgba(5,150,105,0.10);   color: #059669; border: 1px solid rgba(5,150,105,0.2); }
+.chip-month    { background: rgba(99,102,241,0.10);  color: #6366f1; border: 1px solid rgba(99,102,241,0.2); }
+.chip-taken    { background: rgba(234,88,12,0.10);   color: #ea580c; border: 1px solid rgba(234,88,12,0.2); }
+.chip-nottaken { background: var(--surface2);        color: var(--text-muted); border: 1px solid var(--border); }
+
+/* ── Responsive ────────────────────────────────────────── */
+@media (max-width: 700px) {
+    .app { flex-direction: column; }
+    .sidebar { width: 100%; flex-direction: row; height: auto; padding: 10px 16px; }
+    .sidebar .logo { margin-bottom: 0; margin-right: 12px; }
+    .sidebar-top, .sidebar-bottom { display: flex; flex-direction: row; gap: 4px; }
+    .nav-item { margin-bottom: 0; font-size: 12px; padding: 8px 10px; }
+    .form-grid { grid-template-columns: 1fr; }
+    .member-cards { grid-template-columns: 1fr; }
+    #contentArea { padding: 14px; }
+    .card { padding: 16px; }
+}
+/* ═══════════════════════════════════════════════════════════
+   V2 NEW STYLES
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Completed badge ────────────────────────────────────── */
+.badge-completed {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    background: rgba(5,150,105,0.12);
+    color: #059669;
+    border: 1px solid rgba(5,150,105,0.25);
+}
+
+/* ── PS / NPS status badges ─────────────────────────────── */
+.badge-status {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+}
+.badge-ps {
+    background: rgba(234,88,12,0.12);
+    color: #ea580c;
+    border: 1px solid rgba(234,88,12,0.25);
+}
+.badge-nps {
+    background: rgba(37,99,235,0.1);
+    color: var(--primary);
+    border: 1px solid rgba(37,99,235,0.2);
+}
+
+/* ── History grid layout ────────────────────────────────── */
+#contentArea > div[style*="grid-template-columns: 240px"] {
+    align-items: start;
+}
+
+/* ── History advanced search grid ───────────────────────── */
+@media (max-width: 900px) {
+    div[style*="grid-template-columns:1fr 1fr 1fr 1fr"] {
+        grid-template-columns: 1fr 1fr !important;
+    }
+    div[style*="grid-template-columns:240px 1fr"] {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* ── Payment input in table cell ────────────────────────── */
+td input[type="text"] {
+    width: 100%;
+    padding: 7px 10px;
+    font-size: 13px;
+}
+
+/* ── Due list filter bar ─────────────────────────────────── */
+.due-filter-bar {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+/* prevent table overflow */
+.group-item {
+    flex-direction: row;
+    align-items: center;
+}
+
+td {
+    vertical-align: middle;
+}
+
+td input[type="number"],
+td input[type="text"] {
+    width: 100%;
+    margin-top: 4px;
+}
+
+td select {
+    width: 100%;
+}
+.payment-cell {
+    min-width: 240px;
+}
+
+.payment-cell input {
+    width: 100%;
+}
+tbody tr:hover {
+    background: rgba(37, 99, 235, 0.05);
+}
+.btn-danger {
+    padding: 6px 10px;
+}
+
+/* ── Narration column — bigger & wrap-friendly ───────────────────── */
+.narration-cell {
+    min-width: 320px;
+    max-width: 450px;
+    white-space: normal;
+    word-break: break-word;
+}
+th.narration-cell {
+    min-width: 320px;
+}
+
+/* ── Group list — clearer “table name + info below” ───────────────── */
+.group-item-name {
+    font-weight: 600;
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    min-width: 0;
+    flex: 1;
+}
+.group-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    word-break: break-word;          /* prevents cutting long names */
+    line-height: 1.3;
+}
+.group-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+/* ── Table scroll + sticky headers (already good, just reinforced) ── */
+.table-wrap {
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: 65vh;               /* better than fixed 520px */
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    margin-bottom: 16px;
+    position: relative;
+}
+table { width: 100%; border-collapse: collapse; background: var(--surface); font-size: 13.5px; }
+th {
+    background: var(--th-bg);
+    color: #e2e8f0;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    padding: 12px 14px;
+    text-align: left;
+    white-space: nowrap;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+/* ── Sidebar Toggle (Mobile/Desktop) ── */
+
+.menu-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Sidebar hidden */
+.sidebar.collapsed {
+    transform: translateX(-100%);
+}
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 240px;
+
+    z-index: 2000; /* 🔥 increase this */
+    background: var(--sidebar-bg);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+}
+
+/* when open */
+.sidebar.open {
+    transform: translateX(0);
+}
+/* overlay background */
+.sidebar-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    z-index: 1500;
+    display: none;
+}
+
+.sidebar-backdrop.show {
+    display: block;
+}
+.narration-cell input {
+    width: 200px;
+    padding: 6px 8px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    color: var(--text);
+    font-size: 12px;
+}
+/* ── Penalty ────────────────────────────────────────────── */
+.penalty-cell {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+.penalty-badge {
+    display: inline-block;
+    background: #fef2f2;
+    color: var(--danger);
+    border: 1px solid #fecaca;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+.dark .penalty-badge {
+    background: rgba(239,68,68,0.15);
+    border-color: rgba(239,68,68,0.3);
+    color: #f87171;
+}
+
+/* ── Worker input in table ──────────────────────────────── */
+#groupDetails table input[type="text"][onchange*="setWorker"] {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 13px;
+    padding: 5px 8px;
+}
+#groupDetails table input[type="text"][onchange*="setWorker"]:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+/* ── Workers page ───────────────────────────────────────── */
+#workerResults .card { margin-bottom: 0; }
+/* ═══════════════════════════════════════════════════════════
+   V4 ENHANCEMENTS
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Small button variant ───────────────────────────────── */
+.btn-sm {
+    padding: 6px 12px !important;
+    font-size: 12px !important;
+}
+
+/* ── Due List: filter card ──────────────────────────────── */
+.due-filter-card {
+    padding: 16px 20px !important;
+}
+.due-filter-top {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 12px;
+}
+.due-filter-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+.filter-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+.due-search-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.due-search-row input {
+    flex: 1;
+    min-width: 220px;
+}
+.due-sub-info {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    line-height: 1.5;
+}
+
+/* ── Due List: penalty edit cell ────────────────────────── */
+.penalty-edit-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 160px;
+}
+.penalty-input-row {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.penalty-input-row input[type="number"] {
+    width: 68px !important;
+    padding: 5px 8px !important;
+    font-size: 12px !important;
+}
+.no-penalty {
+    color: var(--text-muted);
+    font-size: 12px;
+}
+.due-amount-cell {
+    color: var(--danger);
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+/* ── History: layout with scrollable group panel ────────── */
+.history-layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 16px;
+    align-items: start;
+}
+.history-group-panel {
+    padding: 16px !important;
+    position: sticky;
+    top: 0;
+}
+.history-group-scroll {
+    max-height: calc(100vh - 280px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 2px;
+}
+.history-group-scroll::-webkit-scrollbar { width: 4px; }
+.history-group-scroll::-webkit-scrollbar-track { background: transparent; }
+.history-group-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+/* ── Narration input (history table) ────────────────────── */
+.narration-input {
+    width: 100% !important;
+    min-width: 220px !important;
+    padding: 6px 10px !important;
+    font-size: 12px !important;
+    border-radius: 6px !important;
+    border: 1px solid var(--border) !important;
+    background: var(--surface2) !important;
+    color: var(--text) !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+}
+.narration-input:focus {
+    outline: none !important;
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 2px rgba(37,99,235,0.12) !important;
+}
+
+/* ── Narration cell override ─────────────────────────────── */
+.narration-cell {
+    min-width: 260px !important;
+    max-width: 400px !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+}
+
+/* ── Sidebar padding fix ─────────────────────────────────── */
+.sidebar {
+    padding: 24px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: auto;
+}
+
+/* ── Responsive history layout ──────────────────────────── */
+@media (max-width: 900px) {
+    .history-layout {
+        grid-template-columns: 1fr !important;
+    }
+    .history-group-panel {
+        position: static;
+    }
+    .history-group-scroll {
+        max-height: 220px;
+    }
+}
+
+/* ── Table cell vertical alignment + spacing ────────────── */
+td {
+    vertical-align: middle;
+    padding: 11px 14px;
+}
+th {
+    padding: 12px 14px;
+    white-space: nowrap;
+}
+
+/* ── Penalty badge dark mode ─────────────────────────────── */
+.dark .penalty-badge {
+    background: rgba(239,68,68,0.15);
+    border-color: rgba(239,68,68,0.3);
+    color: #f87171;
+}
+/* ═══════════════════════════════════════════════════════════
+   V5 ENHANCEMENTS — Status dots, narration editing, worker inputs
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Status dots (replaces NPS/PS labels) ───────────────── */
+.status-dot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    vertical-align: middle;
+    flex-shrink: 0;
+    box-shadow: 0 0 0 2px rgba(0,0,0,0.07);
+}
+.dot-green  { background: #10b981; }
+.dot-yellow { background: #f59e0b; }
+.dot-red    { background: #ef4444; }
+
+/* ── Narration cell — click-to-edit ────────────────────── */
+.narration-editable-cell {
+    cursor: pointer;
+    position: relative;
+    min-width: 240px;
+    white-space: normal;
+    word-break: break-word;
+    transition: background var(--transition);
+}
+.narration-editable-cell:hover {
+    background: rgba(37,99,235,0.05) !important;
+}
+.narration-edit-hint {
+    opacity: 0;
+    font-size: 11px;
+    margin-left: 4px;
+    transition: opacity 0.15s;
+    color: var(--primary);
+}
+.narration-editable-cell:hover .narration-edit-hint {
+    opacity: 1;
+}
+.narration-text {
+    display: block;
+    white-space: normal;
+    word-break: break-word;
+    line-height: 1.5;
+    font-size: 12px;
+}
+.narration-live-input {
+    width: 100% !important;
+    min-width: 220px !important;
+    padding: 6px 10px !important;
+    font-size: 12px !important;
+    border-radius: 6px !important;
+    border: 1.5px solid var(--primary) !important;
+    background: var(--surface) !important;
+    color: var(--text) !important;
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.13) !important;
+}
+
+/* ── Worker inline input (workers page + tables page) ───── */
+.worker-inline-input {
+    padding: 6px 10px !important;
+    font-size: 13px !important;
+    border: 1px solid var(--border) !important;
+    border-radius: var(--radius-sm) !important;
+    background: var(--surface2) !important;
+    color: var(--text) !important;
+    font-family: inherit !important;
+    transition: border-color var(--transition) !important;
+}
+.worker-inline-input:focus {
+    outline: none !important;
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 2px rgba(37,99,235,0.12) !important;
+}
+
+/* ── Penalty column in Tables page ─────────────────────── */
+td .penalty-badge {
+    font-size: 12px;
+    padding: 3px 9px;
+}
+
+/* ── Member name + phone on same line ───────────────────── */
+.name-phone-inline {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    white-space: nowrap;
+}
+/* ═══════════════════════════════════════════════════════════
+   V6 — Summary Bar, Penalty Page, Dynamic Totals
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Dynamic table summary bar (Req #3 & #6) ─────────────── */
+.table-summary-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 10px 0 14px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 14px;
+}
+.summary-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+    border: 1px solid transparent;
+}
+.summary-chip.chip-paid     { background: rgba(5,150,105,0.10);  color: #059669; border-color: rgba(5,150,105,0.2); }
+.summary-chip.chip-due      { background: rgba(202,138,4,0.10);  color: #a16207; border-color: rgba(202,138,4,0.2); }
+.summary-chip.chip-month    { background: rgba(99,102,241,0.10); color: #6366f1; border-color: rgba(99,102,241,0.2); }
+.summary-chip.chip-expected { background: rgba(37,99,235,0.10);  color: var(--primary); border-color: rgba(37,99,235,0.2); }
+
+/* ── Penalty page — matches due list style ────────────────── */
+#penaltyTable .penalty-input-row {
+    margin-top: 4px;
+}
+#penaltyTable td { vertical-align: middle; }
+
+/* ── Due list: PS/NPS column label ───────────────────────── */
+th[title] { cursor: help; text-decoration: underline dotted rgba(255,255,255,0.4); }
+/* ═══════════════════════════════════════════════════════════
+   MONEY GIVEN — Payout Management Module Styles
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Payout status badges ────────────────────────────────── */
+.mg-status-full {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    background: rgba(5,150,105,0.12);
+    color: var(--accent);
+    border: 1px solid rgba(5,150,105,0.25);
+}
+.mg-status-partial {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    background: rgba(245,158,11,0.12);
+    color: #b45309;
+    border: 1px solid rgba(245,158,11,0.25);
+}
+.dark .mg-status-partial { color: #fbbf24; }
+.mg-status-pending {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    background: rgba(220,38,38,0.10);
+    color: var(--danger);
+    border: 1px solid rgba(220,38,38,0.2);
+}
+
+/* ── Payout history sub-rows ─────────────────────────────── */
+.mg-history-row {
+    background: var(--surface2);
+    font-size: 12px;
+    color: var(--text-muted);
+    border-top: 1px dashed var(--border);
+}
+.mg-history-row td {
+    padding: 6px 14px;
+    vertical-align: middle;
+}
+
+/* ── Amount given column ─────────────────────────────────── */
+.mg-given-cell {
+    min-width: 160px;
+    white-space: nowrap;
+}
+
+/* ── Record payment input group ──────────────────────────── */
+.mg-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 160px;
+}
+.mg-input-group input[type="number"],
+.mg-input-group input[type="date"] {
+    width: 100% !important;
+    padding: 7px 10px !important;
+    font-size: 13px !important;
+}
+
+/* ── Narration textarea for money given ──────────────────── */
+.mg-narration-cell {
+    min-width: 280px;
+    max-width: 460px;
+    white-space: normal;
+    word-break: break-word;
+    vertical-align: top;
+    padding-top: 14px !important;
+}
+.mg-narration-cell textarea {
+    width: 100%;
+    min-width: 260px;
+    min-height: 64px;
+    resize: vertical;
+    padding: 8px 10px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 13px;
+    line-height: 1.55;
+    transition: border-color var(--transition), box-shadow var(--transition);
+}
+.mg-narration-cell textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+}
+
+/* ── Summary chips for Money Given page ──────────────────── */
+.mg-summary-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 10px 0 16px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 16px;
+}
+.mg-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+    border: 1px solid transparent;
+}
+.mg-chip-total   { background: rgba(37,99,235,0.10);  color: var(--primary);  border-color: rgba(37,99,235,0.2); }
+.mg-chip-given   { background: rgba(5,150,105,0.10);  color: var(--accent);   border-color: rgba(5,150,105,0.2); }
+.mg-chip-pending { background: rgba(220,38,38,0.10);  color: var(--danger);   border-color: rgba(220,38,38,0.2); }
+.mg-chip-members { background: rgba(99,102,241,0.10); color: #6366f1;         border-color: rgba(99,102,241,0.2); }
+
+/* ── Payout amount cell (read-only) ──────────────────────── */
+.mg-payout-amt {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--primary);
+    white-space: nowrap;
+}
+
+/* ── Divider between member rows and history rows ─────────── */
+.mg-member-divider td {
+    padding: 0 !important;
+    height: 1px;
+    background: var(--border);
+}
+
+/* ── PS badge in group list ──────────────────────────────── */
+.mg-ps-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    background: rgba(5,150,105,0.15);
+    color: var(--accent);
+    margin-left: 6px;
+}
+
+/* ── Responsive: stack columns on mobile ─────────────────── */
+@media (max-width: 768px) {
+    .mg-narration-cell { min-width: 180px; max-width: 100%; }
+    .mg-input-group { min-width: 130px; }
+}
+table {
+    table-layout: auto;
+}
+.table-wrap {
+    overflow-x: auto;
+}
