@@ -39,6 +39,13 @@ const chitFundSchema = new mongoose.Schema(
         createdAt: { type: Date, default: Date.now },
       },
     ],
+
+    // ── App-state fields (used by the frontend to persist all data) ──────────
+    appGroups:        { type: mongoose.Schema.Types.Mixed, default: {} },
+    appTrash:         { type: mongoose.Schema.Types.Mixed, default: {} },
+    appReminders:     { type: mongoose.Schema.Types.Mixed, default: [] },
+    appPenaltyRates:  { type: mongoose.Schema.Types.Mixed, default: {} },
+    appTransactions:  { type: mongoose.Schema.Types.Mixed, default: [] },
   },
   { timestamps: true }
 );

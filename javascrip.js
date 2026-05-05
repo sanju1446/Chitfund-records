@@ -2,16 +2,73 @@ let systemDate = localStorage.getItem("systemDate")
     ? new Date(localStorage.getItem("systemDate")) 
     : new Date();
 /* ═══════════════════════════════════════════════════════════
-   RR Kakatiya Chit Fund — javascript.js  (v5 — Production Enhanced)
+   RR Kakatiya Chit Fund — javascript.js  (v6 — MongoDB Backend)
    ═══════════════════════════════════════════════════════════ */
 
-/* ── State ──────────────────────────────────────────────── */
-let groups       = JSON.parse(localStorage.getItem("chitGroups"))       || {};
-let trash        = JSON.parse(localStorage.getItem("chitTrash"))        || {};
-let reminders    = JSON.parse(localStorage.getItem("chitReminders"))    || [];
-let penaltyRates = JSON.parse(localStorage.getItem("chitPenaltyRates")) || {};
-let transactions = JSON.parse(localStorage.getItem("chitTransactions")) || [];
+/* ── API Config ─────────────────────────────────────────── */
+const API_BASE = "http://localhost:5001/api";
+let _dbDocId = null; // MongoDB _id of the single app-state document
+
+/* ── State (loaded from MongoDB on startup) ─────────────── */
+let groups       = {};
+let trash        = {};
+let reminders    = [];
+let penaltyRates = {};
+let transactions = [];
 let activeGroup  = null;
+
+/* ── Load all state from MongoDB ────────────────────────── */
+async function loadStateFromDB() {
+    try {
+        showToast("⏳ Loading data…", "info");
+        const res  = await fetch(API_BASE + "/chitfunds");
+        const json = await res.json();
+        if (!json.success) throw new Error(json.message);
+
+        if (json.data && json.data.length > 0) {
+            // Use the first document as the app-state store
+            const doc   = json.data[0];
+            _dbDocId    = doc._id;
+            groups       = doc.appGroups      || {};
+            trash        = doc.appTrash       || {};
+            reminders    = doc.appReminders   || [];
+            penaltyRates = doc.appPenaltyRates|| {};
+            transactions = doc.appTransactions|| [];
+        } else {
+            // No document yet — create one
+            const createRes  = await fetch(API_BASE + "/chitfunds", {
+                method:  "POST",
+                headers: { "Content-Type": "application/json" },
+                body:    JSON.stringify({
+                    tableName:        "AppState",
+                    amount:           0,
+                    appGroups:        {},
+                    appTrash:         {},
+                    appReminders:     [],
+                    appPenaltyRates:  {},
+                    appTransactions:  []
+                })
+            });
+            const createJson = await createRes.json();
+            if (!createJson.success) throw new Error(createJson.message);
+            _dbDocId = createJson.data._id;
+        }
+        showToast("✅ Data loaded", "success");
+    } catch (err) {
+        console.error("❌ Failed to load from MongoDB:", err);
+        showToast("❌ Could not reach server — using local fallback", "error");
+        // Fall back to localStorage so the app still works offline
+        groups       = JSON.parse(localStorage.getItem("chitGroups"))       || {};
+        trash        = JSON.parse(localStorage.getItem("chitTrash"))        || {};
+        reminders    = JSON.parse(localStorage.getItem("chitReminders"))    || [];
+        penaltyRates = JSON.parse(localStorage.getItem("chitPenaltyRates")) || {};
+        transactions = JSON.parse(localStorage.getItem("chitTransactions")) || [];
+    }
+    // Re-render whatever page is currently shown after data loads
+    autoTickAllGroups();
+    const activeNav = document.querySelector(".nav-item.active");
+    navigate("home", activeNav || document.querySelector(".nav-item"));
+}
 
 /* ═══════════════════════════════════════════════════════════
    UTILS / FORMAT
@@ -19,12 +76,46 @@ let activeGroup  = null;
 function fmt(n) {
     return "₹" + Number(n).toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
+// ── Debounce helper so rapid changes don't flood the API ──
+let _saveTimer = null;
 function save() {
+    // Always write to localStorage as instant fallback
     localStorage.setItem("chitGroups",       JSON.stringify(groups));
     localStorage.setItem("chitTrash",        JSON.stringify(trash));
     localStorage.setItem("chitReminders",    JSON.stringify(reminders));
     localStorage.setItem("chitPenaltyRates", JSON.stringify(penaltyRates));
     localStorage.setItem("chitTransactions", JSON.stringify(transactions));
+
+    // Debounce the API call by 400 ms so rapid edits batch into one request
+    clearTimeout(_saveTimer);
+    _saveTimer = setTimeout(_saveToAPI, 400);
+}
+async function _saveToAPI() {
+    if (!_dbDocId) {
+        console.warn("No DB doc ID yet — skipping API save");
+        return;
+    }
+    try {
+        const payload = {
+            tableName:        "AppState",
+            amount:           0,
+            appGroups:        groups,
+            appTrash:         trash,
+            appReminders:     reminders,
+            appPenaltyRates:  penaltyRates,
+            appTransactions:  transactions
+        };
+        const res  = await fetch(API_BASE + "/chitfunds/" + _dbDocId, {
+            method:  "PUT",
+            headers: { "Content-Type": "application/json" },
+            body:    JSON.stringify(payload)
+        });
+        const json = await res.json();
+        if (!json.success) throw new Error(json.message);
+    } catch (err) {
+        console.error("❌ API save failed:", err);
+        showToast("⚠️ Save to server failed — data is still in browser storage", "warning");
+    }
 }
 function validatePhone(phone) { return /^\d{10}$/.test(phone.trim()); }
 function isGroupCompleted(group) { return group.currentMonth >= group.months; }
@@ -2355,7 +2446,8 @@ function navigate(page, el) {
 
 
 autoTickAllGroups();
-navigate("home", document.querySelector('.nav-item'));
+// Bootstrap: load from MongoDB, then render
+loadStateFromDB();
 /* ═══════════════════════════════════════════════════════════
    MONEY GIVEN — Payout Management Module
    ═══════════════════════════════════════════════════════════ */
